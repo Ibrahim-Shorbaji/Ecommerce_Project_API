@@ -2,6 +2,8 @@ package com.backend.ecommerce_new.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="users")
 public class User {
@@ -15,6 +17,17 @@ public class User {
     private String email;
 
     private String password;
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
 
     public String getPassword() {
