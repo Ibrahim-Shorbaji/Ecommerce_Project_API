@@ -1,6 +1,8 @@
 package com.backend.ecommerce_new.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -11,7 +13,12 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Category name is required")
+    @Size(max = 100, message = "Category name cannot exceed 100 characters")
     private String name;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
     public List<Product> getProducts() {
         return products;
@@ -20,9 +27,6 @@ public class Category {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
-
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
 
     public Long getId() {
         return id;

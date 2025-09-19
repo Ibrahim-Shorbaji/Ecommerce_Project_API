@@ -2,6 +2,7 @@ package com.backend.ecommerce_new.controller;
 
 import com.backend.ecommerce_new.service.UserService;
 import com.backend.ecommerce_new.entity.User;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +33,12 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addUser(@RequestBody User user) {
+    public ResponseEntity<?> addUser(@Valid @RequestBody User user) {
         return ResponseEntity.ok(userService.insert(user));
     }
 
     @PutMapping()
-    public ResponseEntity<?> updateUser(@RequestBody User user) {
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User user) {
         return ResponseEntity.ok(userService.update(user));
     }
 

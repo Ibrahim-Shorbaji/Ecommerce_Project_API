@@ -2,6 +2,7 @@ package com.backend.ecommerce_new.controller;
 
 import com.backend.ecommerce_new.entity.Category;
 import com.backend.ecommerce_new.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +33,13 @@ public class CategoryController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addCategory(@RequestBody Category category)
+    public ResponseEntity<?> addCategory(@Valid @RequestBody Category category)
     {
         return ResponseEntity.ok(categoryService.insert(category));
     }
 
     @PutMapping()
-    public ResponseEntity<?>updateCategory(@RequestBody Category category)
+    public ResponseEntity<?>updateCategory(@Valid @RequestBody Category category)
     {
         return ResponseEntity.ok(categoryService.update(category));
     }

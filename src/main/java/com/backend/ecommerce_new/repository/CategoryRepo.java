@@ -1,13 +1,18 @@
 package com.backend.ecommerce_new.repository;
 
 import com.backend.ecommerce_new.entity.Category;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface CategoryRepo extends JpaRepository<Category,Long> {
 
     Optional<Category> findByName(String name);
+
+    @EntityGraph(attributePaths = {"products"})
+    List<Category> findAll();
 }

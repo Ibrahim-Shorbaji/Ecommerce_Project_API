@@ -2,6 +2,7 @@ package com.backend.ecommerce_new.controller;
 
 import com.backend.ecommerce_new.entity.Order;
 import com.backend.ecommerce_new.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,12 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ResponseEntity<?>addOrder(@RequestBody Order order) {
+    public ResponseEntity<?>addOrder(@Valid @RequestBody Order order) {
         return ResponseEntity.ok(orderService.insert(order));
     }
 
     @PutMapping()
-    public ResponseEntity<?>updateOrder(@RequestBody Order order) {
+    public ResponseEntity<?>updateOrder(@Valid @RequestBody Order order) {
         return ResponseEntity.ok(orderService.update(order));
     }
 

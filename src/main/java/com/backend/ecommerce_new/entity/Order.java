@@ -1,6 +1,7 @@
 package com.backend.ecommerce_new.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,11 +14,19 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Status is required")
     private String status;
 
     private LocalDateTime orderDate;
 
     private Double totalAmount;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<OrderItem> orderItems;
 
     public User getUser() {
         return user;
@@ -35,12 +44,7 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<OrderItem> orderItems;
 
     public Long getId() {
         return id;
@@ -72,5 +76,12 @@ public class Order {
 
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+
+    public void calculateTotalAmount() {
+        if (orderItems != null) {
+            this.totalAmount = orderItems.stream().mapToDouble(OrderItem::getTotalAmount).sum();
+        }
     }
 }
